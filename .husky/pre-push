@@ -1,0 +1,7 @@
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo "Running ESLint before push..."
+npx eslint src
+
+echo "Running Prettier check before push..."
+npx prettier --check "src/**/*.{js,jsx,css,html,json}"

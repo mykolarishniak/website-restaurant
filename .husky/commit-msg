@@ -1,0 +1,10 @@
+. "$(dirname -- "$0")/_/husky.sh"
+
+COMMIT_MSG_FILE=$1
+PATTERN="^(feat|fix|docs|style|refactor|test|chore)(\(.+\))?: .{1,50}"
+
+if ! grep -qE "$PATTERN" "$COMMIT_MSG_FILE"; then
+  echo "Error: Commit message does not follow Conventional Commits format."
+  echo "Example: 'feat(Button): add new prop'"
+  exit 1
+fi
