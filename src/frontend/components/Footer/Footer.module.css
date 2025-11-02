@@ -1,0 +1,17 @@
+.footer {
+  display: flex;
+  justify-content: space-around;
+  background-color: #000;
+  color: #fff;
+  padding: 40px 0;
+  width: 100%;
+}
+
+.footer h4 {
+  color: #FFD700;
+}
+
+.footer p {
+  margin: 5px 0;
+  cursor: pointer;
+}

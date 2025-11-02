@@ -1,0 +1,11 @@
+.wrapper {
+  min-height: 100vh;
+  background-color: #f8f8f8;
+}
+
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 20px;
+}

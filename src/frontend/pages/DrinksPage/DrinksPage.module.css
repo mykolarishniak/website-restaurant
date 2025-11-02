@@ -1,0 +1,19 @@
+.mainContent {
+  padding: 20px 40px;
+  text-align: center;
+}
+
+.pageTitle {
+  font-size: 36px;
+  margin-top: 20px;
+  margin-bottom: 40px;
+}
+
+.gridContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+  max-width: 900px;
+  margin: 0 auto;
+}

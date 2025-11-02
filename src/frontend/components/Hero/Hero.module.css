@@ -1,0 +1,51 @@
+.hero {
+  text-align: center;
+  margin: 50px 0;
+}
+
+.title {
+  font-size: 36px;
+  font-weight: 700;
+  color: #222;
+}
+
+.subtitle {
+  font-size: 18px;
+  margin: 15px 0;
+  color: #555;
+}
+
+.buttons {
+  margin: 20px 0;
+}
+
+.orderBtn {
+  background-color: #FFD700;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.moreBtn {
+  background: none;
+  border: 2px solid #FFD700;
+  padding: 10px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.images {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.images img {
+  width: 240px;
+  height: 180px;
+  border-radius: 10px;
+  object-fit: cover;
+}
