@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './RegistrationForm.module.css';
+import { Link } from 'react-router-dom';
 
 function RegistrationForm() {
 
@@ -53,7 +54,7 @@ function RegistrationForm() {
         </button>
 
         <p className={styles.loginLink}>
-          Вже маєте обліковий запис? <a href="#">Увійти</a>
+          Вже маєте обліковий запис? <Link to="/login">Увійти</Link>
         </p>
       </form>
     </div>

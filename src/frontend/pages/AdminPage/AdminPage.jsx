@@ -1,49 +1,62 @@
-import React from 'react';
-import AdminSidebar from '../../components/AdminSidebar/AdminSidebar';
-import styles from './AdminPage.module.css';
+// import React, { useState } from "react";
+// import AdminSidebar from "../../components/AdminSidebar/AdminSidebar";
+// import AddDishPage from "./AddDishPage";
+// import EditDishPage from "./EditDishPage";
+// import DeleteDishPage from "./DeleteDishPage";
+// import styles from "./AdminPage.module.css";
 
-const AddDishForm = () => (
-  <div className={styles.formContainer}>
-    <h2 className={styles.formTitle}>Додавання нової страви</h2>
-    <form className={styles.form}>
+// function AdminPage() {
+//   const [activePage, setActivePage] = useState("add");
 
-      <div className={styles.formGroup}>
-        <label htmlFor="name" className={styles.label}>Введіть назву страви:</label>
-        <input type="text" id="name" className={styles.input} />
-      </div>
+//   const renderContent = () => {
+//     switch (activePage) {
+//       case "add":
+//         return <AddDishPage />;
+//       case "edit":
+//         return <EditDishPage />;
+//       case "delete":
+//         return <DeleteDishPage />;
+//       default:
+//         return <AddDishPage />;
+//     }
+//   };
 
-      <div className={styles.formGroup}>
-        <label htmlFor="category" className={styles.label}>Оберіть категорію страви:</label>
-        <input type="text" id="category" className={styles.input} />
-      </div>
+//   return (
+//     <div className={styles.adminLayout}>
+//       <AdminSidebar setActivePage={setActivePage} activePage={activePage} />
+//       <main className={styles.content}>{renderContent()}</main>
+//     </div>
+//   );
+// }
 
-      <div className={styles.formGroup}>
-        <label htmlFor="image" className={styles.label}>Виберіть зображення для страви:</label>
-        <input type="file" id="image" className={styles.input} />
-      </div>
+// export default AdminPage;
 
-      <div className={styles.formGroup}>
-        <label htmlFor="price" className={styles.label}>Введіть ціну страви:</label>
-        <input type="number" id="price" className={styles.input} />
-      </div>
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import AdminSidebar from "../../components/AdminSidebar/AdminSidebar";
+import AddDishPage from "./AddDishPage";
+import EditDishPage from "./EditDishPage";
+import DeleteDishPage from "./DeleteDishPage";
+import styles from "./AdminPage.module.css";
 
-      <button type="submit" className={styles.submitButton}>
-        Додати страву
-      </button>
-    </form>
-  </div>
-);
-
-
-function AdminPage() {
+const AdminPage = () => {
   return (
-    <div className={styles.adminLayout}>
+    <div className={styles.wrapper}>
+      {/* Ліва частина — бічна панель (завжди видима) */}
       <AdminSidebar />
+
+      {/* Права частина — змінний контент */}
       <main className={styles.content}>
-        <AddDishForm />
+        <div className={styles.inner}>
+          <Routes>
+            <Route path="/" element={<AddDishPage />} />
+            <Route path="/edit" element={<EditDishPage />} />
+            <Route path="/delete" element={<DeleteDishPage />} />
+          </Routes>
+        </div>
       </main>
     </div>
   );
-}
+};
 
 export default AdminPage;

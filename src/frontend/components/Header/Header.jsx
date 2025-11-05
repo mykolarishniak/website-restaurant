@@ -1,21 +1,23 @@
-import React from 'react'
-import styles from './Header.module.css'
+import React from 'react';
+import { Link } from "react-router-dom";
+import styles from './Header.module.css';
 
 function Header() {
   return (
     <header className={styles.header}>
-      <div className={styles.logo}>UzhRestaurant</div>
+       <Link to="/" className={styles.logo}>
+        UzhRestaurant
+      </Link>
       <nav className={styles.nav}>
         <a href="#">Про нас</a>
         <a href="#">Ціни</a>
         <a href="#">Контакти</a>
       </nav>
       <div className={styles.actions}>
-        <button className={styles.login}>Увійти</button>
-        <button className={styles.signup}>Зареєструватися</button>
+        <Link to="/login" className={styles.login}>Увійти</Link>
+        <Link to="/register" className={styles.signup}>Зареєструватися</Link>
       </div>
     </header>
   )
 }
-
-export default Header
+export default Header;

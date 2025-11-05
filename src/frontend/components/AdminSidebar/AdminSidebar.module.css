@@ -1,4 +1,4 @@
-.sidebar {
+/* .sidebar {
   width: 250px;
   background-color: #000;
   color: #fff;
@@ -26,7 +26,7 @@
   background-color: #ffda00;
   color: #000;
   border: none;
-  border-radius: 5px;
+  border-radius: 10px;
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
@@ -37,4 +37,90 @@
 .button:hover {
   background-color: #ffc900;
   transform: translateY(-1px);
+}
+
+.active {
+  background-color: #ffc900;
+  box-shadow: 0 0 10px #ffda00;
+} */
+
+.sidebar {
+  width: 250px;
+  background-color: #111; /* М'якший чорний */
+  color: #fff;
+  padding: 30px 20px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 3px 0 10px rgba(0, 0, 0, 0.4);
+}
+
+.title {
+  color: #ffda00;
+  font-size: 24px;
+  text-align: center;
+  margin-bottom: 40px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.button {
+  width: 100%;
+  padding: 12px 15px;
+  background-color: transparent;
+  color: #fff;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.25s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.button:hover {
+  background-color: #ffda00;
+  color: #000;
+  box-shadow: 0 0 12px rgba(255, 218, 0, 0.7);
+  transform: translateY(-1px);
+}
+
+.active {
+  background-color: #ffda00;
+  color: #000;
+  box-shadow: 0 0 10px #ffda00;
+  font-weight: 700;
+}
+
+/* Нижній відступний блок — для кнопки виходу або посилання */
+.footer {
+  margin-top: auto;
+  text-align: center;
+}
+
+.footerButton {
+  display: inline-block;
+  width: 100%;
+  background-color: #222;
+  color: #ffda00;
+  padding: 10px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.25s ease;
+}
+
+.footerButton:hover {
+  background-color: #ffda00;
+  color: #000;
+  box-shadow: 0 0 10px rgba(255, 218, 0, 0.7);
 }
