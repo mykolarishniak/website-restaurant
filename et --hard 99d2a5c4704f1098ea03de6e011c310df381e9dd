@@ -1,0 +1,38 @@
+[33mfd33c6b[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mrestaurant-website[m[33m)[m HEAD@{0}: reset: moving to fd33c6b973b34be6c93ab735f6a62be90f2ac8b4
+[33m99d2a5c[m[33m ([m[1;31morigin/restaurant-website[m[33m)[m HEAD@{1}: reset: moving to 99d2a5c4704f1098ea03de6e011c310df381e9dd
+[33m99d2a5c[m[33m ([m[1;31morigin/restaurant-website[m[33m)[m HEAD@{2}: commit: Added routing, added adding dish, editing dish, deleting dish in admin panel
+[33mfd33c6b[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mrestaurant-website[m[33m)[m HEAD@{3}: reset: moving to fd33c6b
+[33m3aab10c[m HEAD@{4}: pull --tags origin restaurant-website: Fast-forward
+[33mfd33c6b[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mrestaurant-website[m[33m)[m HEAD@{5}: reset: moving to fd33c6b973b34be6c93ab735f6a62be90f2ac8b4
+[33m3aab10c[m HEAD@{6}: reset: moving to 3aab10c
+[33maebe2bf[m HEAD@{7}: reset: moving to aebe2bf
+[33mfd33c6b[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mrestaurant-website[m[33m)[m HEAD@{8}: reset: moving to fd33c6b973b34be6c93ab735f6a62be90f2ac8b4
+[33mfd33c6b[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mrestaurant-website[m[33m)[m HEAD@{9}: reset: moving to fd33c6b973b34be6c93ab735f6a62be90f2ac8b4
+[33m3aab10c[m HEAD@{10}: pull --tags origin restaurant-website: Merge made by the 'ort' strategy.
+[33mfd33c6b[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mrestaurant-website[m[33m)[m HEAD@{11}: rebase (finish): returning to refs/heads/restaurant-website
+[33mfd33c6b[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mrestaurant-website[m[33m)[m HEAD@{12}: commit (amend): Added frontend
+[33m6b87817[m HEAD@{13}: rebase (edit): Added frontend
+[33m6cda1fd[m HEAD@{14}: rebase (pick): Added components and pages directories
+[33mf3b1fc2[m HEAD@{15}: rebase (pick): Added frontend directory
+[33m7e7a7d7[m HEAD@{16}: rebase (pick): Added architecture for react project
+[33mefd309f[m HEAD@{17}: rebase (pick): Added architecture for react project
+[33mc91d278[m HEAD@{18}: rebase (pick): Added project architecture
+[33m2fbda97[m HEAD@{19}: rebase (start): checkout HEAD~5
+[33maebe2bf[m HEAD@{20}: rebase (abort): returning to refs/heads/restaurant-website
+[33m6e99bd2[m HEAD@{21}: rebase (edit): Added project architecture
+[33m2fbda97[m HEAD@{22}: rebase (start): checkout HEAD~5
+[33maebe2bf[m HEAD@{23}: rebase (abort): returning to refs/heads/restaurant-website
+[33md2fce8f[m HEAD@{24}: rebase (edit): Added project architecture
+[33m2fbda97[m HEAD@{25}: rebase (start): checkout HEAD~5
+[33maebe2bf[m HEAD@{26}: rebase (finish): returning to refs/heads/restaurant-website
+[33maebe2bf[m HEAD@{27}: rebase (start): checkout HEAD~2
+[33maebe2bf[m HEAD@{28}: commit: Added frontend
+[33m7978ffa[m HEAD@{29}: commit: Added components and pages directories
+[33mdd24e0a[m HEAD@{30}: commit: Added frontend directory
+[33m46d0bbb[m HEAD@{31}: merge temp: Merge made by the 'ort' strategy.
+[33m2fbda97[m HEAD@{32}: checkout: moving from temp to restaurant-website
+[33mbecff64[m[33m ([m[1;32mtemp[m[33m)[m HEAD@{33}: commit: Added architecture for react project
+[33m56a07e0[m HEAD@{34}: commit: Added architecture for react project
+[33md6e9b89[m[33m ([m[1;32mmaster[m[33m)[m HEAD@{35}: checkout: moving from restaurant-website to temp
+[33m2fbda97[m HEAD@{36}: checkout: moving from master to restaurant-website
+[33md6e9b89[m[33m ([m[1;32mmaster[m[33m)[m HEAD@{37}: commit (initial): Added project architecture

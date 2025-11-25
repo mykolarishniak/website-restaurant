@@ -1,52 +1,6 @@
-/* .sidebar {
-  width: 250px;
-  background-color: #000;
-  color: #fff;
-  padding: 30px 20px;
-  min-height: 100vh;
-}
-
-.title {
-  color: #ffda00;
-  font-size: 24px;
-  text-align: center;
-  margin-bottom: 40px;
-  font-weight: 700;
-}
-
-.nav {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.button {
-  width: 100%;
-  padding: 12px 15px;
-  background-color: #ffda00;
-  color: #000;
-  border: none;
-  border-radius: 10px;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  text-align: center;
-  transition: background-color 0.2s, transform 0.1s;
-}
-
-.button:hover {
-  background-color: #ffc900;
-  transform: translateY(-1px);
-}
-
-.active {
-  background-color: #ffc900;
-  box-shadow: 0 0 10px #ffda00;
-} */
-
 .sidebar {
   width: 250px;
-  background-color: #111; /* М'якший чорний */
+  background-color: #111;
   color: #fff;
   padding: 30px 20px;
   min-height: 100vh;

@@ -9,13 +9,13 @@ import drink from '../../../assets/images/drinks.png'
 import dessert from '../../../assets/images/dessert.png'
 
 const categories = [
-  { title: 'Салати', img: salad },
-  { title: 'Супи', img: soup },
-  { title: 'Основні страви', img: main },
-  { title: 'Гарніри', img: grill },
-  { title: 'Напої', img: drink, path: "/drinks" },
-  { title: 'Десерти', img: dessert },
-]
+  { title: 'Салати', img: salad, path: "/category/salads" },
+  { title: 'Супи', img: soup, path: "/category/soups" },
+  { title: 'Основні страви', img: main, path: "/category/main" },
+  { title: 'Гарніри', img: grill, path: "/category/sides" },
+  { title: 'Напої', img: drink, path: "/category/drinks" },
+  { title: 'Десерти', img: dessert, path: "/category/desserts" },
+];
 
 function Categories() {
     const navigate = useNavigate();

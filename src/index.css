@@ -1,11 +1,9 @@
-/* === Скидання стандартних стилів === */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* === Змінні кольорів і шрифтів === */
 :root {
   --primary-color: #ffd600;
   --primary-hover: #ffdb4d;
@@ -16,7 +14,6 @@
   --font-main: "Inter", "Roboto", "Poppins", system-ui, sans-serif;
 }
 
-/* === Основні стилі === */
 html,
 body {
   width: 100%;
@@ -34,7 +31,6 @@ body {
   align-items: center;
 }
 
-/* === Основний контейнер === */
 #root {
   display: flex;
   flex-direction: column;
@@ -42,7 +38,6 @@ body {
   width: 100%;
 }
 
-/* === Посилання === */
 a {
   color: var(--secondary-color);
   text-decoration: none;
@@ -53,7 +48,6 @@ a:hover {
   color: var(--primary-color);
 }
 
-/* === Заголовки === */
 h1, h2, h3, h4, h5 {
   color: var(--secondary-color);
   font-weight: 700;
@@ -69,7 +63,6 @@ h2 {
   font-size: 2rem;
 }
 
-/* === Основна частина сторінки === */
 main {
   flex: 1;
   width: 100%;
@@ -82,7 +75,6 @@ main {
   align-items: center;
 }
 
-/* === Картки === */
 .card {
   background-color: #fff;
   border-radius: 12px;
@@ -95,7 +87,6 @@ main {
   transform: translateY(-5px);
 }
 
-/* === Кнопки === */
 button {
   cursor: pointer;
   border: none;
@@ -124,7 +115,6 @@ button.secondary:hover {
   background-color: #fff9cc;
 }
 
-/* === Картинки === */
 img {
   border-radius: 16px;
   object-fit: cover;
@@ -137,7 +127,6 @@ img:hover {
   transform: scale(1.05);
 }
 
-/* === Секція категорій === */
 .categories {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));

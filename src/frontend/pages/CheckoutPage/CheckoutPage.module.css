@@ -1,0 +1,91 @@
+.container {
+  max-width: 700px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.title {
+  font-size: 30px;
+  font-weight: 700;
+  margin-bottom: 25px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  background: #f3f3f3;
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 16px;
+  gap: 20px;
+}
+
+.item img {
+  width: 100px;
+  height: 100px;
+  border-radius: 14px;
+  object-fit: cover;
+}
+
+.info h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.info p {
+  margin: 4px 0;
+  font-size: 16px;
+}
+
+.info span {
+  color: #444;
+  font-size: 15px;
+}
+
+label {
+  display: block;
+  margin-top: 25px;
+  margin-bottom: 6px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  outline: none;
+  margin-bottom: 10px;
+}
+
+.submit {
+  width: 100%;
+  background: #ffe600;
+  padding: 14px;
+  border-radius: 14px;
+  border: none;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 25px;
+  transition: 0.2s;
+}
+
+.submit:hover {
+  background: #f5d800;
+}
+
+.cancel {
+  width: 100%;
+  background: transparent;
+  padding: 14px;
+  border-radius: 14px;
+  border: 1px solid #ccc;
+  font-size: 18px;
+  cursor: pointer;
+  margin-top: 15px;
+}

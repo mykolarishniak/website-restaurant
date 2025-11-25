@@ -1,23 +1,84 @@
-import React from 'react';
-import { Link } from "react-router-dom";
+import React, { useState, useEffect, useRef, useContext } from 'react';
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
 import styles from './Header.module.css';
+import { getCurrentUser, logoutUser } from '../../services/authService';
 
 function Header() {
+  const { user, setUser } = useContext(AuthContext);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const navigate = useNavigate();
+  const dropdownRef = useRef();
+
+  useEffect(() => {
+    const currentUser = getCurrentUser();
+    setUser(currentUser);
+  }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  const handleLogout = () => {
+  logoutUser();
+  setUser(null);
+  navigate("/login");
+};
+
+
   return (
     <header className={styles.header}>
-       <Link to="/" className={styles.logo}>
+      <Link to="/" className={styles.logo}>
         UzhRestaurant
       </Link>
+
       <nav className={styles.nav}>
         <a href="#">Про нас</a>
         <a href="#">Ціни</a>
         <a href="#">Контакти</a>
       </nav>
-      <div className={styles.actions}>
-        <Link to="/login" className={styles.login}>Увійти</Link>
-        <Link to="/register" className={styles.signup}>Зареєструватися</Link>
+
+     <div className={styles.actions}>
+
+  <Link to="/cart" className={styles.cartIcon}>
+    <span className={styles.cartEmoji}>🛒</span>
+  </Link>
+
+  {!user ? (
+    <>
+      <Link to="/login" className={styles.login}>Увійти</Link>
+      <Link to="/register" className={styles.signup}>Зареєструватися</Link>
+    </>
+  ) : (
+    <div className={styles.userMenu} ref={dropdownRef}>
+      <div
+        className={styles.avatar}
+        onClick={() => setDropdownOpen(!dropdownOpen)}
+      >
+        {user.username[0].toUpperCase()}
       </div>
+
+      {dropdownOpen && (
+        <div className={styles.dropdown}>
+          <p><strong>{user.username}</strong></p>
+          <p>{user.email}</p>
+          <button onClick={handleLogout}>Вийти</button>
+        </div>
+      )}
+    </div>
+  )}
+</div>
+
     </header>
-  )
+  );
 }
+
 export default Header;

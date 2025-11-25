@@ -1,0 +1,111 @@
+.container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.title {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 30px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  background: #f3f3f3;
+  padding: 15px;
+  border-radius: 16px;
+  margin-bottom: 20px;
+  gap: 20px;
+}
+
+.img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 14px;
+  background: #ddd;
+}
+
+.info {
+  flex: 1;
+}
+
+.info h3 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.price {
+  margin-top: 8px;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.quantity {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.quantity button {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: #ffe600;
+  font-size: 20px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.quantity span {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.delete {
+  background: #ff4747;
+  border: none;
+  color: white;
+  padding: 10px 16px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+.delete:hover {
+  background: #e93b3b;
+}
+
+.checkoutBtn {
+  display: block;
+  background: #ffe600;
+  padding: 15px 20px;
+  text-align: center;
+  border-radius: 14px;
+  font-size: 18px;
+  width: 260px;
+  margin-top: 30px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.checkoutBtn:hover {
+  background: #f5d800;
+}
+
+@media (max-width: 600px) {
+  .item {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .quantity {
+    justify-content: center;
+  }
+}
