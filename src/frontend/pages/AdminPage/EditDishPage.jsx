@@ -1,87 +1,53 @@
-// import React, { useState } from "react";
-// import styles from "./AdminPage.module.css";
-
-// const EditDishPage = () => {
-//   const [dishId, setDishId] = useState("");
-//   const [newName, setNewName] = useState("");
-//   const [newPrice, setNewPrice] = useState("");
-
-//   const handleEdit = (e) => {
-//     e.preventDefault();
-//     alert(`Страву з ID ${dishId} успішно оновлено!`);
-//     setDishId("");
-//     setNewName("");
-//     setNewPrice("");
-//   };
-
-//   return (
-//     <div className={styles.wrapper}>
-//       <div className={styles.content}>
-//         <div className={styles.inner}>
-//           <h2>Редагування страви</h2>
-//           <form onSubmit={handleEdit} className={styles.form}>
-//             <label>ID страви:</label>
-//             <input
-//               type="text"
-//               value={dishId}
-//               onChange={(e) => setDishId(e.target.value)}
-//               required
-//             />
-
-//             <label>Нова назва:</label>
-//             <input
-//               type="text"
-//               value={newName}
-//               onChange={(e) => setNewName(e.target.value)}
-//             />
-
-//             <label>Нова ціна:</label>
-//             <input
-//               type="number"
-//               value={newPrice}
-//               onChange={(e) => setNewPrice(e.target.value)}
-//             />
-
-//             <button type="submit">Оновити страву</button>
-//           </form>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default EditDishPage;
-
-import React, { useState } from "react";
-import { getMenuItems, updateDish } from "../../services/menuService";
-import styles from "./AdminPage.module.css";
+import React, { useState, useEffect } from 'react';
+import { getMenuItems, updateDish } from '../../services/menuService';
+import styles from './AdminPage.module.css';
 
 const EditDishPage = () => {
-  const items = getMenuItems();
+  const [items, setItems] = useState([]);
+  const [selectedId, setSelectedId] = useState('');
+  const [title, setTitle] = useState('');
+  const [price, setPrice] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
 
-  const [selectedId, setSelectedId] = useState("");
-  const [title, setTitle] = useState("");
-  const [price, setPrice] = useState("");
+  useEffect(() => {
+    async function fetchItems() {
+      const data = await getMenuItems();
+      setItems(data);
+      setLoading(false);
+    }
+    fetchItems();
+  }, []);
 
-  const handleSelect = (id) => {
+  const handleSelect = id => {
     setSelectedId(id);
     const dish = items.find(d => d.id === id);
-    setTitle(dish.title);
-    setPrice(dish.price);
-  };
-
-  const handleEdit = (e) => {
-    e.preventDefault();
-
-    const result = updateDish(selectedId, { title, price });
-
-    if (result.success) {
-      alert("Страву оновлено!");
-    } else {
-      alert("Помилка редагування");
-      console.error(result.error);
+    if (dish) {
+      setTitle(dish.title);
+      setPrice(dish.price);
     }
   };
+
+  const handleEdit = async e => {
+    e.preventDefault();
+    setSaving(true);
+
+    const result = await updateDish(selectedId, { title, price: Number(price) });
+
+    if (result.success) {
+      alert('Страву оновлено!');
+      const updatedItems = await getMenuItems();
+      setItems(updatedItems);
+    } else {
+      alert('Помилка редагування');
+      console.error(result.error);
+    }
+    setSaving(false);
+  };
+
+  if (loading) {
+    return <p>Завантаження...</p>;
+  }
 
   return (
     <form onSubmit={handleEdit} className={styles.form}>
@@ -92,7 +58,7 @@ const EditDishPage = () => {
         <option value="">Оберіть...</option>
         {items.map(item => (
           <option key={item.id} value={item.id}>
-            {item.id} — {item.title}
+            {item.title} — {item.price} грн
           </option>
         ))}
       </select>
@@ -103,9 +69,9 @@ const EditDishPage = () => {
           <input value={title} onChange={e => setTitle(e.target.value)} />
 
           <label>Нова ціна:</label>
-          <input value={price} onChange={e => setPrice(e.target.value)} />
+          <input type="number" value={price} onChange={e => setPrice(e.target.value)} />
 
-          <button>Оновити</button>
+          <button disabled={saving}>{saving ? 'Оновлення...' : 'Оновити'}</button>
         </>
       )}
     </form>

@@ -1,0 +1,23 @@
+[
+  {
+    "id": "1",
+    "title": "Мохіто класичний",
+    "price": 85,
+    "imgSrc": "/images/mojito.png",
+    "category": "drinks"
+  },
+  {
+    "id": "2",
+    "title": "Глінтвейн",
+    "price": 90,
+    "imgSrc": "/images/mulledwine.png",
+    "category": "drinks"
+  },
+  {
+    "id": "3",
+    "title": "Борщ",
+    "price": 180,
+    "imgSrc": "/images/borsch.png",
+    "category": "soups"
+  }
+]

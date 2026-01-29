@@ -5,10 +5,11 @@ import { AuthContext } from "../../context/AuthContext";
 import styles from "./CartPage.module.css";
 import Header from "../../components/Header/Header";
 
-const parsePrice = (priceString) => {
-    if (!priceString) return 0;
-    const price = parseFloat(priceString.replace(/[^\d,.]/g, '').replace(',', '.'));
-    return isNaN(price) ? 0 : price;
+const parsePrice = (price) => {
+    if (price == null) return 0;
+    if (typeof price === 'number') return price;
+    const parsed = parseFloat(String(price).replace(/[^\d,.]/g, '').replace(',', '.'));
+    return isNaN(parsed) ? 0 : parsed;
 };
 
 export default function CartPage() {

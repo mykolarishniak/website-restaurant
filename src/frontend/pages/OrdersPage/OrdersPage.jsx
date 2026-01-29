@@ -1,77 +1,33 @@
-// import React, { useEffect, useState } from 'react';
-// import { authService } from '../../services/authService';
-// import { getOrdersByUser } from '../../services/orderService';
-// import { useNavigate } from 'react-router-dom';
-
-// export default function OrdersPage() {
-//   const [orders, setOrders] = useState([]);
-//   const [user, setUser] = useState(null);
-//   const navigate = useNavigate();
-
-//   useEffect(() => {
-//     const currentUser = authService.getCurrentUser();
-
-//     if (!currentUser) {
-//       alert("Авторизуйтесь, щоб переглядати свої замовлення");
-//       navigate("/login");
-//       return;
-//     }
-
-//     setUser(currentUser);
-
-//     const userOrders = getOrdersByUser(currentUser.id);
-//     setOrders(userOrders);
-//   }, []);
-
-//   return (
-//     <div style={{ padding: "20px" }}>
-//       <h2>Мої замовлення</h2>
-
-//       {orders.length === 0 ? (
-//         <p>У вас ще немає замовлень.</p>
-//       ) : (
-//         <ul>
-//           {orders.map(order => (
-//             <li key={order.id} style={{ marginBottom: "15px", padding: "10px", border: "1px solid #ccc" }}>
-//               <p><strong>Номер замовлення:</strong> {order.id}</p>
-//               <p><strong>Дата:</strong> {order.date}</p>
-//               <p><strong>Сума:</strong> {order.total} грн</p>
-
-//               <p><strong>Страви:</strong></p>
-//               <ul>
-//                 {order.items.map(item => (
-//                   <li key={item.id}>
-//                     {item.title} — {item.price} × {item.quantity}
-//                   </li>
-//                 ))}
-//               </ul>
-//             </li>
-//           ))}
-//         </ul>
-//       )}
-
-//     </div>
-//   );
-// }
-
-import React, { useEffect, useState } from "react";
-import { authService } from "../../services/authService";
-import { getOrdersByUser } from "../../services/orderService";
-import styles from "./OrdersPage.module.css";
+import React, { useEffect, useState, useContext } from 'react';
+import { getOrdersByUser } from '../../services/orderService';
+import { AuthContext } from '../../context/AuthContext';
+import styles from './OrdersPage.module.css';
 
 export default function OrdersPage() {
   const [orders, setOrders] = useState([]);
-  const currentUser = authService.getCurrentUser();
+  const [loading, setLoading] = useState(true);
+  const { user } = useContext(AuthContext);
 
   useEffect(() => {
-    if (currentUser) {
-      const userOrders = getOrdersByUser(currentUser.id);
-      setOrders(userOrders);
+    async function fetchOrders() {
+      if (user) {
+        setLoading(true);
+        const userOrders = await getOrdersByUser(user.id);
+        setOrders(userOrders);
+        setLoading(false);
+      } else {
+        setLoading(false);
+      }
     }
-  }, []);
+    fetchOrders();
+  }, [user]);
 
-  if (!currentUser) {
+  if (!user) {
     return <p className={styles.message}>Увійдіть в акаунт, щоб переглянути свої замовлення.</p>;
+  }
+
+  if (loading) {
+    return <p className={styles.message}>Завантаження...</p>;
   }
 
   return (
@@ -84,8 +40,8 @@ export default function OrdersPage() {
         orders.map(order => (
           <div key={order.id} className={styles.orderBlock}>
             <div className={styles.orderHeader}>
-              <span>Замовлення №{order.id}</span>
-              <span>{order.date}</span>
+              <span>Замовлення №{order.id.slice(0, 8)}</span>
+              <span>{order.date ? new Date(order.date).toLocaleDateString('uk-UA') : ''}</span>
             </div>
 
             <div className={styles.itemsList}>

@@ -8,9 +8,16 @@
     "build": "vite build",
     "lint": "eslint .",
     "prepare": "husky",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "cypress run",
+    "test:open": "cypress open",
+    "test:e2e": "cypress run --e2e",
+    "test:e2e:open": "cypress open --e2e",
+    "test:component": "cypress run --component",
+    "test:component:open": "cypress open --component"
   },
   "dependencies": {
+    "firebase": "^12.8.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-router-dom": "^7.9.5"
@@ -25,6 +32,7 @@
     "@types/react": "^19.1.16",
     "@types/react-dom": "^19.1.9",
     "@vitejs/plugin-react": "^5.0.4",
+    "cypress": "^14.5.4",
     "eslint": "^9.39.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-cypress": "^5.2.0",

@@ -1,17 +1,18 @@
-import { useContext, useEffect, useState } from "react";
-import { CartContext } from "../../context/CartContext";
-import { AuthContext } from "../../context/AuthContext";
-import { createOrder } from "../../services/orderService";
-import { useNavigate } from "react-router-dom";
-import Header from "../../components/Header/Header";
-import styles from "./CheckoutPage.module.css";
+import { useContext, useEffect, useState } from 'react';
+import { CartContext } from '../../context/CartContext';
+import { AuthContext } from '../../context/AuthContext';
+import { createOrder } from '../../services/orderService';
+import { useNavigate } from 'react-router-dom';
+import Header from '../../components/Header/Header';
+import styles from './CheckoutPage.module.css';
 
 export default function CheckoutPage() {
   const { cart, clearCart } = useContext(CartContext);
   const { user, loading } = useContext(AuthContext);
 
-  const [phone, setPhone] = useState("");
-  const [delivery, setDelivery] = useState("");
+  const [phone, setPhone] = useState('');
+  const [delivery, setDelivery] = useState('');
+  const [submitting, setSubmitting] = useState(false);
 
   const navigate = useNavigate();
 
@@ -19,22 +20,24 @@ export default function CheckoutPage() {
     if (loading) return;
 
     if (!user) {
-      alert("Увійдіть в акаунт, щоб оформити замовлення");
-      navigate("/login");
+      alert('Увійдіть в акаунт, щоб оформити замовлення');
+      navigate('/login');
     }
   }, [user, loading, navigate]);
 
-  const handleSubmit = () => {
-    const result = createOrder({
+  const handleSubmit = async () => {
+    setSubmitting(true);
+    const result = await createOrder({
       phone,
       delivery,
-      cart
+      cart,
     });
 
     if (result.success) {
       clearCart();
-      navigate("/");
+      navigate('/');
     }
+    setSubmitting(false);
   };
 
   return (
@@ -48,7 +51,7 @@ export default function CheckoutPage() {
           <p>Кошик порожній. Додайте товари для оформлення.</p>
         ) : (
           <>
-            {cart.map((item) => (
+            {cart.map(item => (
               <div className={styles.item} key={item.id}>
                 <img src={item.imgSrc} alt={item.title} />
                 <div className={styles.info}>
@@ -60,29 +63,20 @@ export default function CheckoutPage() {
             ))}
 
             <label>Введіть номер телефону:</label>
-            <input
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-            />
+            <input value={phone} onChange={e => setPhone(e.target.value)} />
 
             <label>Оберіть спосіб отримання:</label>
-            <select
-              value={delivery}
-              onChange={(e) => setDelivery(e.target.value)}
-            >
+            <select value={delivery} onChange={e => setDelivery(e.target.value)}>
               <option value="">Оберіть...</option>
               <option value="self">Самовивіз</option>
               <option value="courier">Кур'єр</option>
             </select>
 
-            <button className={styles.submit} onClick={handleSubmit}>
-              Оформити замовлення
+            <button className={styles.submit} onClick={handleSubmit} disabled={submitting}>
+              {submitting ? 'Оформлення...' : 'Оформити замовлення'}
             </button>
 
-            <button
-              className={styles.cancel}
-              onClick={() => navigate("/cart")}
-            >
+            <button className={styles.cancel} onClick={() => navigate('/cart')}>
               Скасувати
             </button>
           </>
@@ -91,5 +85,3 @@ export default function CheckoutPage() {
     </>
   );
 }
-
-CheckoutPage.jsx

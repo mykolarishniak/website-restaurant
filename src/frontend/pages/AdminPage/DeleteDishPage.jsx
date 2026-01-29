@@ -1,69 +1,67 @@
-// import React, { useState } from "react";
-// import styles from "./AdminPage.module.css";
-
-// const DeleteDishPage = () => {
-//   const [dishId, setDishId] = useState("");
-
-//   const handleDelete = (e) => {
-//     e.preventDefault();
-//     alert(`Страву з ID ${dishId} видалено!`);
-//     setDishId("");
-//   };
-
-//   return (
-//     <div className={styles.wrapper}>
-//       <div className={styles.content}>
-//         <div className={styles.inner}>
-//           <h2>Видалення страви</h2>
-//           <form onSubmit={handleDelete} className={styles.form}>
-//             <label>Введіть ID страви:</label>
-//             <input
-//               type="text"
-//               value={dishId}
-//               onChange={(e) => setDishId(e.target.value)}
-//               required
-//             />
-//             <button type="submit" className={styles.deleteBtn}>
-//               Видалити страву
-//             </button>
-//           </form>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default DeleteDishPage;
-
-import React, { useState } from "react";
-import { deleteDish } from "../../services/menuService";
-import styles from "./AdminPage.module.css";
+import React, { useState, useEffect } from 'react';
+import { getMenuItems, deleteDish } from '../../services/menuService';
+import styles from './AdminPage.module.css';
 
 const DeleteDishPage = () => {
-  const [id, setId] = useState("");
+  const [items, setItems] = useState([]);
+  const [selectedId, setSelectedId] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [deleting, setDeleting] = useState(false);
 
-  const handleDelete = (e) => {
+  useEffect(() => {
+    async function fetchItems() {
+      const data = await getMenuItems();
+      setItems(data);
+      setLoading(false);
+    }
+    fetchItems();
+  }, []);
+
+  const handleDelete = async e => {
     e.preventDefault();
+    if (!selectedId) return;
 
-    const result = deleteDish(id);
+    const dish = items.find(d => d.id === selectedId);
+    if (!confirm(`Ви впевнені, що хочете видалити "${dish?.title}"?`)) {
+      return;
+    }
+
+    setDeleting(true);
+    const result = await deleteDish(selectedId);
 
     if (result.success) {
-      alert(`Страву з ID ${id} видалено`);
-      setId("");
+      alert(`Страву видалено`);
+      setSelectedId('');
+      const updatedItems = await getMenuItems();
+      setItems(updatedItems);
     } else {
-      alert("Помилка видалення");
+      alert('Помилка видалення');
       console.error(result.error);
     }
+    setDeleting(false);
   };
+
+  if (loading) {
+    return <p>Завантаження...</p>;
+  }
 
   return (
     <form onSubmit={handleDelete} className={styles.form}>
       <h2>Видалення страви</h2>
 
-      <label>ID страви:</label>
-      <input value={id} onChange={e => setId(e.target.value)} required />
+      <label>Оберіть страву:</label>
+      <select value={selectedId} onChange={e => setSelectedId(e.target.value)} required>
+        <option value="">Оберіть...</option>
+        {items.map(item => (
+          <option key={item.id} value={item.id}>
+            {item.title} — {item.price} грн
+          </option>
+        ))}
+      </select>
 
-      <button className={styles.deleteBtn}>Видалити</button>
+      <button className={styles.deleteBtn} disabled={deleting || !selectedId}>
+        {deleting ? 'Видалення...' : 'Видалити'}
+      </button>
     </form>
   );
 };
