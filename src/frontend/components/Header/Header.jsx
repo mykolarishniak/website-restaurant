@@ -3,9 +3,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import styles from './Header.module.css';
 import { getCurrentUser, logoutUser } from '../../services/authService';
+import { CartContext } from "../../context/CartContext";
+
 
 function Header() {
   const { user, setUser } = useContext(AuthContext);
+  const { cart } = useContext(CartContext);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const navigate = useNavigate();
   const dropdownRef = useRef();
@@ -33,6 +36,11 @@ function Header() {
   navigate("/login");
 };
 
+const cartCount = cart.reduce(
+  (sum, item) => sum + item.quantity,
+  0
+);
+
 
   return (
     <header className={styles.header}>
@@ -50,6 +58,11 @@ function Header() {
 
   <Link to="/cart" className={styles.cartIcon}>
     <span className={styles.cartEmoji}>🛒</span>
+    {cartCount > 0 && (
+    <span className={styles.cartBadge}>
+      {cartCount}
+    </span>
+  )}
   </Link>
 
   {!user ? (
@@ -70,6 +83,13 @@ function Header() {
         <div className={styles.dropdown}>
           <p><strong>{user.username}</strong></p>
           <p>{user.email}</p>
+          <Link
+      to="/orders"
+      className={styles.ordersBtn}
+      onClick={() => setDropdownOpen(false)}
+    >
+      📦 Мої замовлення
+    </Link>
           <button onClick={handleLogout}>Вийти</button>
         </div>
       )}

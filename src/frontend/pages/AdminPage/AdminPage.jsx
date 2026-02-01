@@ -4,6 +4,7 @@ import AdminSidebar from "../../components/AdminSidebar/AdminSidebar";
 import AddDishPage from "./AddDishPage";
 import EditDishPage from "./EditDishPage";
 import DeleteDishPage from "./DeleteDishPage";
+import AdminOrdersPage from "./AdminOrdersPage";
 import styles from "./AdminPage.module.css";
 
 const AdminPage = () => {
@@ -16,6 +17,7 @@ const AdminPage = () => {
             <Route path="/" element={<AddDishPage />} />
             <Route path="/edit" element={<EditDishPage />} />
             <Route path="/delete" element={<DeleteDishPage />} />
+            <Route path="/orders" element={<AdminOrdersPage />} />
           </Routes>
         </div>
       </main>

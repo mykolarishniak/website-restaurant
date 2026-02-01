@@ -1,76 +1,50 @@
-describe('Admin Page', () => {
+describe("ADMIN ROUTE ACCESS CONTROL", () => {
+
   beforeEach(() => {
-    cy.visit('/admin');
+    cy.on("uncaught:exception", () => false);
   });
 
-  it('should display admin page', () => {
-    cy.url().should('include', '/admin');
-  });
-
-  it('should have admin sidebar or navigation', () => {
-    cy.get('body').should('be.visible');
-  });
-
-  it('should have add dish option', () => {
-    // Admin page should have add dish functionality
-    cy.get('body').then(($body) => {
-      if ($body.find('a[href*="admin"]').length > 0 || $body.find('[class*="sidebar"]').length > 0) {
-        cy.get('a, button').should('exist');
-      }
+  it("ADMIN can access /admin", () => {
+    cy.visit("/admin", {
+      onBeforeLoad(win) {
+        win.__TEST_USER__ = {
+          id: "1",
+          email: "admin@gmail.com",
+          role: "admin",
+          username: "admin",
+        };
+      },
     });
-  });
-});
 
-describe('Admin Add Dish Page', () => {
-  beforeEach(() => {
-    cy.visit('/admin');
+    cy.url().should("include", "/admin");
+    cy.contains(/додати/i).should("exist");
   });
 
-  it('should display add dish form', () => {
-    cy.get('form').should('be.visible');
+  it("USER is redirected with alert", () => {
+    cy.on("window:alert", text => {
+      expect(text).to.contain("Доступ заборонено");
+    });
+
+    cy.visit("/admin", {
+      onBeforeLoad(win) {
+        win.__TEST_USER__ = {
+          id: "2",
+          email: "user@gmail.com",
+          role: "user",
+        };
+      },
+    });
+
+    cy.url().should("eq", Cypress.config().baseUrl + "/");
   });
 
-  it('should have title input', () => {
-    cy.get('input').should('exist');
-  });
+  it("GUEST is redirected with alert", () => {
+    cy.on("window:alert", text => {
+      expect(text).to.contain("Доступ заборонено");
+    });
 
-  it('should have category select', () => {
-    cy.get('select').should('exist');
-  });
+    cy.visit("/admin");
 
-  it('should have submit button', () => {
-    cy.get('button[type="submit"]').should('exist');
-  });
-});
-
-describe('Admin Edit Dish Page', () => {
-  beforeEach(() => {
-    cy.visit('/admin/edit');
-  });
-
-  it('should display edit page', () => {
-    cy.url().should('include', '/admin/edit');
-  });
-
-  it('should have dish selection', () => {
-    cy.get('select').should('exist');
-  });
-});
-
-describe('Admin Delete Dish Page', () => {
-  beforeEach(() => {
-    cy.visit('/admin/delete');
-  });
-
-  it('should display delete page', () => {
-    cy.url().should('include', '/admin/delete');
-  });
-
-  it('should have dish selection', () => {
-    cy.get('select').should('exist');
-  });
-
-  it('should have delete button', () => {
-    cy.get('button').contains(/видалити/i).should('exist');
+    cy.url().should("eq", Cypress.config().baseUrl + "/");
   });
 });

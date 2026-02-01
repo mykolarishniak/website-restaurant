@@ -1,4 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { UserContext } from './frontend/context/UserContext';
+import { Navigate } from 'react-router-dom';
 import Home from './frontend/pages/Home/Home';
 import RegistrationPage from './frontend/pages/RegistrationPage/RegistrationPage';
 import AdminPage from './frontend/pages/AdminPage/AdminPage';
@@ -19,6 +21,7 @@ import { UserProvider } from './frontend/context/UserContext.jsx';
 import CheckoutPage from './frontend/pages/CheckoutPage/CheckoutPage.jsx';
 import { AuthProvider } from './frontend/context/AuthContext.jsx';
 import OrdersPage from './frontend/pages/OrdersPage/OrdersPage.jsx';
+import { requireAdmin } from "./frontend/services/adminService";
 
 const initialData = [
   { title: 'Мохіто класичний', price: 85, imgSrc: classicmojito, category: 'drinks' },
@@ -29,6 +32,26 @@ const initialData = [
   { title: 'Джин-тонік', price: 90, imgSrc: ginTonic, category: 'drinks' },
   { title: 'Борщ', price: 180, imgSrc: borsch, category: 'soups' },
 ];
+
+function AdminRoute({ children }) {
+  const { user } = useContext(UserContext);
+
+  console.log('AdminRoute check, current user:', user);
+
+  if (user === undefined) return <p>Завантаження...</p>;
+
+  if (!user) {
+    alert('Доступ заборонено. Ви повинні бути авторизовані.');
+    return <Navigate to="/" replace />;
+  }
+
+  if (user.role !== 'admin') {
+    alert('Доступ заборонено. Ви повинні бути адміністратором.');
+    return <Navigate to="/" replace />;
+  }
+
+  return children;
+}
 
 function App() {
   useEffect(() => {
@@ -54,7 +77,14 @@ function App() {
               <Route path="/cart" element={<CartPage />} />
               <Route path="/checkout" element={<CheckoutPage />} />
               <Route path="/orders" element={<OrdersPage />} />
-              <Route path="/admin/*" element={<AdminPage />} />
+              <Route
+                path="/admin/*"
+                element={
+                  <AdminRoute>
+                    <AdminPage />
+                  </AdminRoute>
+                }
+              />
             </Routes>
           </Router>
         </CartProvider>

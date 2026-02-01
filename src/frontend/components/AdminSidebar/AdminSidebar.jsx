@@ -33,6 +33,14 @@ const AdminSidebar = () => {
           >
             Видалити страву
           </NavLink>
+          <NavLink
+            to="/admin/orders"
+            className={({ isActive }) =>
+              `${styles.button} ${isActive ? styles.active : ""}`
+            }
+          >
+            Замовлення
+          </NavLink>
         </nav>
       </div>
 

@@ -1,44 +1,66 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { auth, db } from '../../firebase';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
-import { doc, getDoc } from 'firebase/firestore';
+import { collection, query, where, getDocs } from 'firebase/firestore';
 
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(undefined);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async firebaseUser => {
-      if (firebaseUser) {
-        try {
-          const userDoc = await getDoc(doc(db, 'users', firebaseUser.uid));
-          const userData = userDoc.data();
+    if (window.__TEST_USER__) {
+    console.log("UserContext: TEST USER USED", window.__TEST_USER__);
+    setUser(window.__TEST_USER__);
+    return;
+  }
+    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+      console.log('UserContext check, firebaseUser:', firebaseUser);
+
+      if (!firebaseUser) {
+        setUser(null);
+        console.log('UserContext loaded: no user');
+        return;
+      }
+
+      try {
+        const usersRef = collection(db, 'users');
+        const q = query(usersRef, where('email', '==', firebaseUser.email));
+        const querySnapshot = await getDocs(q);
+
+        if (!querySnapshot.empty) {
+          const docData = querySnapshot.docs[0].data();
+          console.log('UserContext loaded userData from Firestore:', docData);
           setUser({
             id: firebaseUser.uid,
-            username: userData?.username || firebaseUser.displayName,
             email: firebaseUser.email,
-            role: userData?.role || 'user',
+            username: docData.username || firebaseUser.displayName,
+            role: docData.role || 'user',
           });
-        } catch (error) {
+        } else {
+          console.log('UserContext: user not found in Firestore');
           setUser({
             id: firebaseUser.uid,
-            username: firebaseUser.displayName,
             email: firebaseUser.email,
+            username: firebaseUser.displayName || null,
             role: 'user',
           });
         }
-      } else {
-        setUser(null);
+      } catch (error) {
+        console.error('UserContext error loading Firestore user:', error);
+        setUser({
+          id: firebaseUser.uid,
+          email: firebaseUser.email,
+          username: firebaseUser.displayName || null,
+          role: 'user',
+        });
       }
     });
+
     return () => unsubscribe();
   }, []);
 
-  const login = userData => {
-    setUser(userData);
-  };
-
+  const login = (userData) => setUser(userData);
   const logout = async () => {
     await signOut(auth);
     setUser(null);

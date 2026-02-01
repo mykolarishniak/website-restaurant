@@ -7,6 +7,7 @@
   background-color: white;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
   position: sticky;
+  z-index: 1000;
   top: 0;
 }
 
@@ -113,6 +114,7 @@
   border: 2px solid #e1e1e1;
   text-decoration: none;
   transition: 0.25s;
+  position: relative;
 }
 
 .cartIcon:hover {
@@ -134,4 +136,22 @@
   justify-content: center;
   font-weight: bold;
   cursor: pointer;
+}
+
+.cartBadge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background-color: #ff3b3b;
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
 }

@@ -7,26 +7,80 @@ import {
   deleteDish as removeDish,
 } from './menuService';
 
-export async function checkAdminAccess() {
-  const firebaseUser = auth.currentUser;
-  if (!firebaseUser) {
-    alert('Доступ заборонено. Ви повинні бути авторизовані.');
-    return false;
-  }
+import { onAuthStateChanged } from "firebase/auth";
 
-  try {
-    const userDoc = await getDoc(doc(db, 'users', firebaseUser.uid));
-    const userData = userDoc.data();
+// export async function checkAdminAccess() {
+//   const firebaseUser = auth.currentUser;
+//   if (!firebaseUser) {
+//     alert('Доступ заборонено. Ви повинні бути авторизовані.');
+//     return false;
+//   }
 
-    if (!userData || userData.role !== 'admin') {
-      alert('Доступ заборонено. Ви повинні бути адміністратором.');
-      return false;
-    }
-    return true;
-  } catch (error) {
-    console.error('Error checking admin access:', error);
-    return false;
-  }
+//   try {
+//     const userDoc = await getDoc(doc(db, 'users', firebaseUser.uid));
+//     const userData = userDoc.data();
+
+//     if (!userData || userData.role !== 'admin') {
+//       alert('Доступ заборонено. Ви повинні бути адміністратором.');
+//       return false;
+//     }
+//     return true;
+//   } catch (error) {
+//     console.error('Error checking admin access:', error);
+//     return false;
+//   }
+// }
+
+export function requireAdmin() {
+  return new Promise((resolve) => {
+    onAuthStateChanged(auth, async (firebaseUser) => {
+      if (!firebaseUser) {
+        resolve({ allowed: false, reason: 'not-logged-in' });
+        return;
+      }
+
+      try {
+        const userDoc = await getDoc(doc(db, 'users', firebaseUser.uid));
+        const userData = userDoc.data();
+
+        if (!userData || userData.role !== 'admin') {
+          resolve({ allowed: false, reason: 'not-admin' });
+          return;
+        }
+
+        resolve({ allowed: true, user: { ...userData, id: firebaseUser.uid } });
+      } catch (error) {
+        console.error('Error checking admin access:', error);
+        resolve({ allowed: false, reason: 'error' });
+      }
+    });
+  });
+}
+
+export function checkAdminAccess() {
+  return new Promise((resolve) => {
+    onAuthStateChanged(auth, async (firebaseUser) => {
+      if (!firebaseUser) {
+        alert("Доступ заборонено. Ви повинні бути авторизовані.");
+        return resolve(false);
+      }
+
+      try {
+        const userDoc = await getDoc(doc(db, "users", firebaseUser.uid));
+        const userData = userDoc.data();
+
+        if (!userData || userData.role !== "admin") {
+          alert("Доступ заборонено. Ви повинні бути адміністратором.");
+          return resolve(false);
+        }
+
+        resolve(true);
+      } catch (error) {
+        console.error("Error checking admin access:", error);
+        resolve(false);
+      }
+    });
+  });
 }
 
 export async function addDish({ title, category, imgSrc, price }) {

@@ -16,7 +16,6 @@ describe('Authentication', () => {
 
     it('should show validation error for empty fields', () => {
       cy.get('button[type="submit"]').click();
-      // Form should not submit with empty fields (HTML5 validation)
       cy.url().should('include', '/register');
     });
 
@@ -25,7 +24,6 @@ describe('Authentication', () => {
       cy.get('input[type="email"]').type(testEmail);
       cy.get('input[type="password"]').type('short');
       cy.get('button[type="submit"]').click();
-      // Should stay on register page due to validation
       cy.url().should('include', '/register');
     });
 
@@ -50,7 +48,6 @@ describe('Authentication', () => {
       cy.get('input[type="email"]').type('invalid@example.com');
       cy.get('input[type="password"]').type('wrongpassword');
       cy.get('button[type="submit"]').click();
-      // Should stay on login page
       cy.url().should('include', '/login');
     });
 

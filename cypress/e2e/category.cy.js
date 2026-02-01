@@ -18,22 +18,18 @@ describe('Category Page', () => {
 
   it('should show loading state initially', () => {
     cy.visit('/category/drinks');
-    // Page should render (either loading or items)
     cy.get('main').should('be.visible');
   });
 
   it('should display menu items or empty message', () => {
     cy.visit('/category/drinks');
-    // Wait for loading to complete
     cy.wait(2000);
-    // Should show either items or empty message
     cy.get('main').should('be.visible');
   });
 
   it('should have order buttons on menu items', () => {
     cy.visit('/category/drinks');
     cy.wait(2000);
-    // If there are items, they should have order buttons
     cy.get('body').then(($body) => {
       if ($body.find('[class*="menuItem"]').length > 0) {
         cy.get('button').contains('Замовити').should('exist');

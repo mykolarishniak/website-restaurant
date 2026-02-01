@@ -28,6 +28,7 @@ export default [
         cy: 'readonly',
         before: 'readonly',
         after: 'readonly',
+        Cypress: 'readonly',
         beforeEach: 'readonly',
         afterEach: 'readonly',
                 ...globals.browser,
